@@ -9,10 +9,7 @@ function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
 
-const colorSwitch = () => {
-  bodyEl.style.backgroundColor = getRandomHexColor();
-};
-
+const colorSwitch = () => (bodyEl.style.backgroundColor = getRandomHexColor());
 const onStartBtnClick = () => {
   startBtnEl.disabled = true;
   stopBtnEl.disabled = false;
