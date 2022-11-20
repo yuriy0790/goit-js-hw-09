@@ -9,7 +9,7 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     if (selectedDates[0] > new Date()) {
-      Notiflix.Notify.success('Press Start');
+      Notiflix.Notify.success('Start countdown');
       startBtnEl.disabled = false;
     } else {
       Notiflix.Notify.failure('Please choose a date in the future');
