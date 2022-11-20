@@ -10,6 +10,7 @@ function getRandomHexColor() {
 }
 
 const colorSwitch = () => (bodyEl.style.backgroundColor = getRandomHexColor());
+
 const onStartBtnClick = () => {
   startBtnEl.disabled = true;
   stopBtnEl.disabled = false;
