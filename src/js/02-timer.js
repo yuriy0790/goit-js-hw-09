@@ -1,6 +1,6 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
-// import Notiflix from 'notiflix';
+import Notiflix from 'notiflix';
 
 const options = {
   enableTime: true,
@@ -8,7 +8,13 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    console.log('flatpickr', selectedDates[0]);
+    if (selectedDates[0] > new Date()) {
+      Notiflix.Notify.success('Press Start');
+      startBtnEl.disabled = false;
+    } else {
+      Notiflix.Notify.failure('Please choose a date in the future');
+      startBtnEl.disabled = true;
+    }
   },
 };
 
@@ -41,25 +47,31 @@ function addLeadingZero(value) {
   return value.toString().padStart(2, '0');
 }
 
-const onDateChange = () => {
-  if (new Date(dateInputEl.value) > new Date()) {
-    console.log('ok');
-    startBtnEl.disabled = false;
-  } else {
-    window.alert('Please choose a date in the future');
-    startBtnEl.disabled = true;
-  }
-};
+// const onDateChange = () => {
+//   if (new Date(dateInputEl.value) > new Date()) {
+//     console.log('ok');
+//     startBtnEl.disabled = false;
+//   } else {
+//     window.alert('Please choose a date in the future');
+//     startBtnEl.disabled = true;
+//   }
+// };
 
 const timerRun = () => {
   ms = new Date(dateInputEl.value) - new Date();
   if (ms <= 0) {
     clearInterval(timerId);
-    window.alert('Bip Bip');
-    startBtnEl.disabled = true;
+    daysEl.textContent = '00';
+    hoursEl.textContent = '00';
+    minutesEl.textContent = '00';
+    secondsEl.textContent = '00';
+    if (ms > -1000) {
+      Notiflix.Notify.success('Bip-bip Bip-bip');
+    }
+
     return;
   }
-
+  startBtnEl.disabled = true;
   daysEl.textContent = addLeadingZero(convertMs(ms).days);
   hoursEl.textContent = addLeadingZero(convertMs(ms).hours);
   minutesEl.textContent = addLeadingZero(convertMs(ms).minutes);
@@ -71,4 +83,4 @@ const onStartBtnClick = () => {
 };
 
 startBtnEl.addEventListener('click', onStartBtnClick);
-dateInputEl.addEventListener('change', onDateChange);
+// dateInputEl.addEventListener('change', onDateChange);
